@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use http\Env\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProductController extends Controller
 {
@@ -13,7 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return 'index';
+        $data = Product::all();
+        return $data->fresh();
     }
 
     /**
@@ -26,7 +29,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        return 'index2';
+        $data = $request->validated();
+        return Product::create($data);
+
     }
 
     /**
@@ -34,7 +39,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return 'index3';
+        return $product;
     }
 
     /**
@@ -47,7 +52,9 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        return 'index4';
+        $data = $request->validated();
+        $product->update($data);
+        return $product->fresh();
     }
 
     /**
@@ -55,6 +62,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        return 'index5';
+        $product->delete();
+        return response(\Illuminate\Http\Response::HTTP_OK);
     }
 }

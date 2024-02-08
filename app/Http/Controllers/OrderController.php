@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class OrderController extends Controller
 {
@@ -13,7 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $data = Order::all();
+        return $data->fresh();
     }
 
     /**
@@ -29,7 +32,9 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $data = $request->validated();
+        return Order::create($data);
+
     }
 
     /**
@@ -37,7 +42,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        return $order;
     }
 
     /**
@@ -53,7 +58,9 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $data = $request->validated();
+        $order ->update($data);
+        return $order->fresh();
     }
 
     /**
@@ -61,6 +68,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+       $order->delete();
+       return response(\Illuminate\Http\Response::HTTP_OK);
     }
 }

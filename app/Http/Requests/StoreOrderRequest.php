@@ -15,7 +15,10 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            "date_of_order"=>"required|date",
+            "total_sum"=>"required|numeric",
+            "service_name"=>"required|string",
+            "user"=>"required|string"
         ];
     }
 }

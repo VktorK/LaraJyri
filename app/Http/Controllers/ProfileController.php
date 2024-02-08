@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\Profile;
+use Illuminate\Http\Client\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProfileController extends Controller
 {
@@ -13,7 +15,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $data = Profile::all();
+        return $data->fresh();
     }
 
     /**
@@ -29,7 +32,9 @@ class ProfileController extends Controller
      */
     public function store(StoreProfileRequest $request)
     {
-        //
+        $data = $request->validated();
+        return Profile::create($data);
+
     }
 
     /**
@@ -37,7 +42,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        return $profile;
     }
 
     /**
@@ -53,7 +58,9 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request, Profile $profile)
     {
-        //
+        $data = $request->validated();
+        $profile->update($data);
+        return $profile->fresh();
     }
 
     /**
@@ -61,6 +68,7 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
+        $profile->delete();
+        return response(\Illuminate\Http\Response::HTTP_OK);
     }
 }

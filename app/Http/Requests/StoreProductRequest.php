@@ -9,10 +9,7 @@ class StoreProductRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
+
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +19,11 @@ class StoreProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "title"=>"required|string",
+            "content"=>"required|string",
+            "category"=>"required|string",
+            "executor"=>"required|string",
+            "price"=>"required|numeric",
         ];
     }
 }

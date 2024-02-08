@@ -9,10 +9,6 @@ class UpdateExecutorRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
-    {
-        return false;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -22,7 +18,19 @@ class UpdateExecutorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'Last_name'=> 'required|string',
+            'First_name'=> 'required|string',
+            'Middle_name'=> 'required|string',
+            'Phone'=> 'required|string',
+            'Specialization'=> 'required|string',
+            'experience'=> 'required|integer',
+            'address'=> 'required|string',
         ];
     }
 }
+
+
+
+
+
+

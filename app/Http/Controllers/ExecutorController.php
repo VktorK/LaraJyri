@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreExecutorRequest;
 use App\Http\Requests\UpdateExecutorRequest;
 use App\Models\Executor;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ExecutorController extends Controller
 {
@@ -13,7 +15,8 @@ class ExecutorController extends Controller
      */
     public function index()
     {
-        //
+        $data = Executor::all();
+        return $data->fresh();
     }
 
     /**
@@ -29,7 +32,9 @@ class ExecutorController extends Controller
      */
     public function store(StoreExecutorRequest $request)
     {
-        //
+        $data = $request->validated();
+        return Executor::create($data);
+
     }
 
     /**
@@ -37,7 +42,7 @@ class ExecutorController extends Controller
      */
     public function show(Executor $executor)
     {
-        //
+       return $executor;
     }
 
     /**
@@ -53,7 +58,9 @@ class ExecutorController extends Controller
      */
     public function update(UpdateExecutorRequest $request, Executor $executor)
     {
-        //
+        $data = $request->validated();
+        $executor->update($data);
+        return $executor->fresh();
     }
 
     /**
@@ -61,6 +68,7 @@ class ExecutorController extends Controller
      */
     public function destroy(Executor $executor)
     {
-        //
+        $executor->delete();
+        return response(\Illuminate\Http\Response::HTTP_OK);
     }
 }
