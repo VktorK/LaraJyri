@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
-use http\Env\Response;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class TransactionController extends Controller
 {
@@ -41,7 +40,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        return $transaction;
+        return TransactionResource::make($transaction)->resolve();
     }
 
     /**

@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use http\Env\Response;
-use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProductController extends Controller
 {
@@ -39,7 +38,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $product;
+        return ProductResource::make($product)->resolve();
     }
 
     /**

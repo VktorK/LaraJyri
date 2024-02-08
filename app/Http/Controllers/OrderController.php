@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\ExecutorResource;
+use App\Http\Resources\OrderResource;
 use App\Models\Order;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -42,7 +44,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        return $order;
+        return OrderResource::make($order)->resolve();
     }
 
     /**

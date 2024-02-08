@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExecutorRequest;
 use App\Http\Requests\UpdateExecutorRequest;
+use App\Http\Resources\ExecutorResource;
 use App\Models\Executor;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -17,6 +18,7 @@ class ExecutorController extends Controller
     {
         $data = Executor::all();
         return $data->fresh();
+
     }
 
     /**
@@ -42,7 +44,7 @@ class ExecutorController extends Controller
      */
     public function show(Executor $executor)
     {
-       return $executor;
+       return ExecutorResource::make($executor)->resolve();
     }
 
     /**

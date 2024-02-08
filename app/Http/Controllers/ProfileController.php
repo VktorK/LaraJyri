@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use Illuminate\Http\Client\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -42,7 +43,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        return $profile;
+        return ProfileResource::make($profile)->resolve();
     }
 
     /**
