@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->index()->constrained('users');
             $table->string('Last_name');
             $table->string('First_name');
             $table->string('Middle_name');
-            $table->unsignedSmallInteger('gender');
+            $table->foreignId('gender')->index()->constrained('genders');
             $table->date('date_of_but');
             $table->string('address_of_');
             $table->string('residential_address');

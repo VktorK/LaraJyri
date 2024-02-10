@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('date_of_end');
             $table->decimal('summ');
             $table->decimal('summ_from');
-            $table->string('user');
+            $table->foreignId('user_id')->index()->constrained('users');
             $table->timestamps();
         });
     }

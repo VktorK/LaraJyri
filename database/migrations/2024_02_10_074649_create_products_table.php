@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('content');
-            $table->string('category');
-            $table->string('executor');
+            $table->foreignId('categories_of_product_id')->index()->constrained('category_of_products');
+            $table->foreignId('executor_id')->index()->constrained('executors');
             $table->decimal('price');
             $table->timestamps();
         });
