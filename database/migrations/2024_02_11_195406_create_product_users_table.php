@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->index()->constrained('users');
             $table->foreignId('product_id')->index()->constrained('products');
-            $table->foreignId('order_id')->index()->constrained('orders');
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('Last_name');
             $table->string('First_name');
             $table->string('Middle_name');
-            $table->foreignId('gender')->index()->constrained('genders');
+            $table->foreignId('gender_id')->index()->constrained('genders');
             $table->date('date_of_but');
             $table->string('address_of_');
             $table->string('residential_address');
