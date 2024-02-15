@@ -6,6 +6,7 @@ use App\Http\Resources\ProfileResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Gender extends Model
 {
@@ -17,4 +18,6 @@ class Gender extends Model
     {
         return $this->hasMany(Profile::class);
     }
+
+
 }

@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Executor;
 use App\Models\StatusOfTransaction;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Console\Command;
 
 class GoCommand extends Command
@@ -27,7 +29,7 @@ class GoCommand extends Command
      */
     public function handle()
     {
-        $statusOfTransactions = StatusOfTransaction::first();
-        dd($statusOfTransactions->transactions->toArray());
+        $user = Executor::first();
+        dd($user->orders->toArray());
     }
 }

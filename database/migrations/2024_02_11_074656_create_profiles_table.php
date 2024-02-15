@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->index()->constrained('users');
-            $table->string('Last_name');
-            $table->string('First_name');
-            $table->string('Middle_name');
-            $table->foreignId('gender_id')->index()->constrained('genders');
+            $table->string('Last_name')->nullable();
+            $table->string('First_name')->nullable();
+            $table->string('Middle_name')->nullable();
+
             $table->date('date_of_but');
-            $table->string('address_of_');
-            $table->string('residential_address');
+            $table->string('residential_address')->nullable();
             $table->string('login');
-            $table->decimal('balance');
+            $table->decimal('balance')->nullable();
             $table->timestamps();
+
+            $table->unsignedBigInteger('profileable_id');
+            $table->string('profileable_type');
         });
     }
 
