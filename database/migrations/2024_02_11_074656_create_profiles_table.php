@@ -16,15 +16,14 @@ return new class extends Migration
             $table->string('Last_name')->nullable();
             $table->string('First_name')->nullable();
             $table->string('Middle_name')->nullable();
-
             $table->date('date_of_but');
             $table->string('residential_address')->nullable();
             $table->string('login');
             $table->decimal('balance')->nullable();
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->unsignedBigInteger('profileable_id');
-            $table->string('profileable_type');
+            $table->foreignId('user_id')->index()->constrained('users');
         });
     }
 

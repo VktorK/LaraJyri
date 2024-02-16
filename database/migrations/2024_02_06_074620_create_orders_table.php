@@ -17,9 +17,11 @@ return new class extends Migration
             $table->decimal('total_sum');
             $table->string('service_name');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->unsignedBigInteger('orderable_id');
-            $table->string('orderable_type');
+
+            $table->foreignId('user_id')->index()->constrained('users');
+
         });
     }
 

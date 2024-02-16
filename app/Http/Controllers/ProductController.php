@@ -6,39 +6,34 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): array
     {
-        $data = Product::all();
-        return $data->fresh();
+        return ProductResource::collection(Product::all())->resolve();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-        return Product::create($data);
+        $product = Product::create($data);
+        return ProductResource::make($product);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product): ProductResource
     {
-        return ProductResource::make($product)->resolve();
+        return ProductResource::make($product);
     }
 
     /**
@@ -49,19 +44,20 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product): ProductResource
     {
         $data = $request->validated();
         $product->update($data);
-        return $product->fresh();
+        $product = $product->fresh();
+        return ProductResource::make($product);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): ResponseAlias
     {
         $product->delete();
-        return response(\Illuminate\Http\Response::HTTP_OK);
+        return response(ResponseAlias::HTTP_OK);
     }
 }

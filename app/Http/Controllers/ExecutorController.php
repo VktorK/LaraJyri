@@ -14,10 +14,9 @@ class ExecutorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): array
     {
-        $data = Executor::all();
-        return $data->fresh();
+        return ExecutorResource::collection(Executor::all())->resolve();
 
     }
 
@@ -32,19 +31,20 @@ class ExecutorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreExecutorRequest $request)
+    public function store(StoreExecutorRequest $request): ExecutorResource
     {
         $data = $request->validated();
-        return Executor::create($data);
+        $executor =  Executor::create($data);
+        return ExecutorResource::make($executor);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Executor $executor)
+    public function show(Executor $executor): ExecutorResource
     {
-       return ExecutorResource::make($executor)->resolve();
+       return ExecutorResource::make($executor);
     }
 
     /**
@@ -58,19 +58,20 @@ class ExecutorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateExecutorRequest $request, Executor $executor)
+    public function update(UpdateExecutorRequest $request, Executor $executor): ExecutorResource
     {
         $data = $request->validated();
         $executor->update($data);
-        return $executor->fresh();
+        $executor =  $executor->fresh();
+        return ExecutorResource::make($executor);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Executor $executor)
+    public function destroy(Executor $executor): ResponseAlias
     {
         $executor->delete();
-        return response(\Illuminate\Http\Response::HTTP_OK);
+        return response(ResponseAlias::HTTP_OK);
     }
 }

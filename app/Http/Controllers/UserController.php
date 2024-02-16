@@ -8,16 +8,16 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): array
     {
-        $data = User::all();
-        return $data->fresh();
+        return UserResource::collection(User::all())->resolve();
     }
 
     /**
@@ -25,34 +25,36 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $data = $request->validated();
-        return User::create($data);
+        $data = $request->validationData();
+        $user = User::create($data);
+        return UserResource::make($user);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): UserResource
     {
-        return UserResource::make($user)->resolve();
+        return UserResource::make($user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user): UserResource
     {
         $data = $request->validated();
         $user->update($data);
-        return $user->fresh();
+        $user = $user->fresh();
+        return UserResource::make($user);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): ResponseAlias
     {
         $user->delete();
-        return response(Response::HTTP_OK);
+        return response(ResponseAlias::HTTP_OK);
     }
 }

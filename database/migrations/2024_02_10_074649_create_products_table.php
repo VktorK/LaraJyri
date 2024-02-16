@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('content');
             $table->decimal('price');
             $table->timestamps();
+            $table->softDeletes();
+
 
             $table->foreignId('categories_of_product_id')->index()->constrained('category_of_products');
 

@@ -15,15 +15,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): array
     {
-        $data = Order::all();
-        return $data->fresh();
+        return OrderResource::collection(Order::all())->resolve();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -32,19 +28,20 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request): OrderResource
     {
         $data = $request->validated();
-        return Order::create($data);
+        $order =  Order::create($data);
+        return OrderResource::make($order);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Order $order)
+    public function show(Order $order): OrderResource
     {
-        return OrderResource::make($order)->resolve();
+        return OrderResource::make($order);
     }
 
     /**
@@ -58,19 +55,20 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(UpdateOrderRequest $request, Order $order): OrderResource
     {
         $data = $request->validated();
         $order ->update($data);
-        return $order->fresh();
+        $order =  $order->fresh();
+        return OrderResource::make($order);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(Order $order): ResponseAlias
     {
        $order->delete();
-       return response(\Illuminate\Http\Response::HTTP_OK);
+       return response(ResponseAlias::HTTP_OK);
     }
 }

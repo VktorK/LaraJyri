@@ -6,15 +6,17 @@ use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use http\Client\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): array
     {
-        return Transaction::all();
+        return TransactionResource::collection(Transaction::all())->resolve();
     }
 
     /**
@@ -22,51 +24,43 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTransactionRequest $request)
+    public function store(StoreTransactionRequest $request): TransactionResource
     {
-        $data = $request->validated();
-        return Transaction::create($data);
+        $data = $request->validationData();
+        $transactions = Transaction::create($data);
+        return TransactionResource::make($transactions);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Transaction $transaction)
+    public function show(Transaction $transaction): TransactionResource
     {
-        return TransactionResource::make($transaction)->resolve();
+        return TransactionResource::make($transaction);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTransactionRequest $request, Transaction $transaction)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction): TransactionResource
     {
-        $data = $request->validated();
+        $data = $request->validationData();
         $transaction->update($data);
-        return $transaction->fresh();
+        $transactions = $transaction->fresh();
+        return TransactionResource::make($transactions);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction): ResponseAlias
     {
         $transaction->delete();
-        return response(\Illuminate\Http\Response::HTTP_OK);
+        return response(ResponseAlias::HTTP_OK);
     }
 }

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('experience');
             $table->string('address');
             $table->timestamps();
+            $table->softDeletes();
+
 
 
 

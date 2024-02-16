@@ -7,16 +7,16 @@ use App\Http\Requests\UpdatePromocodeRequest;
 use App\Http\Resources\PromocodeResource;
 use App\Models\Promocode;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class PromocodeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): array
     {
-        $data = Promocode::all();
-        return $data->fresh();
+        return PromocodeResource::collection(Promocode::all())->resolve();
     }
 
     /**
@@ -25,7 +25,8 @@ class PromocodeController extends Controller
     public function store(StorePromocodeRequest $request)
     {
         $data = $request->validated();
-        return Promocode::create($data);
+        $promocode = Promocode::create($data);
+        return PromocodeResource::make($promocode);
     }
 
     /**
@@ -33,25 +34,26 @@ class PromocodeController extends Controller
      */
     public function show(Promocode $promocode)
     {
-        return PromocodeResource::make($promocode)->resolve();
+        return PromocodeResource::make($promocode);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePromocodeRequest $request, Promocode $promocode)
+    public function update(UpdatePromocodeRequest $request, Promocode $promocode): PromocodeResource
     {
         $data = $request->validated();
         $promocode->update($data);
-        return $promocode->fresh();
+        $promocode = $promocode->fresh();
+        return PromocodeResource::make($promocode);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Promocode $promocode)
+    public function destroy(Promocode $promocode): ResponseAlias
     {
         $promocode->delete();
-        return response(Response::HTTP_OK);
+        return response(ResponseAlias::HTTP_OK);
     }
 }

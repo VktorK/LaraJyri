@@ -19,6 +19,8 @@ return new class extends Migration
             $table->decimal('summ_from');
             $table->foreignId('user_id')->index()->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

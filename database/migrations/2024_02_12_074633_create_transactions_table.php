@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('user');
             $table->decimal('value');
             $table->timestamps();
-
-            $table->foreignId('status_of_transaction_id')->index()->constrained('status_of_transactions')->default(1);
-            $table->foreignId('profile_id')->index()->constrained('profiles');
+            $table->softDeletes();
+            $table->unsignedSmallInteger('status')->default(1);
+            $table->foreignId('user_id')->index()->constrained('users');
 
         });
     }

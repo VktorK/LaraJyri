@@ -16,8 +16,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $data = Profile::all();
-        return $data->fresh();
+        return ProfileResource::collection(Profile::all())->resolve();
+
     }
 
     /**
@@ -31,19 +31,20 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProfileRequest $request)
+    public function store(StoreProfileRequest $request): ProfileResource
     {
         $data = $request->validated();
-        return Profile::create($data);
+        $profiles = Profile::create($data);
+        return ProfileResource::make($profiles);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Profile $profile)
+    public function show(Profile $profile): ProfileResource
     {
-        return ProfileResource::make($profile)->resolve();
+        return ProfileResource::make($profile);
     }
 
     /**
@@ -57,19 +58,20 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProfileRequest $request, Profile $profile)
+    public function update(UpdateProfileRequest $request, Profile $profile): ProfileResource
     {
         $data = $request->validated();
         $profile->update($data);
-        return $profile->fresh();
+        $profiles = $profile->fresh();
+        return ProfileResource::make($profiles);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Profile $profile)
+    public function destroy(Profile $profile): ResponseAlias
     {
         $profile->delete();
-        return response(\Illuminate\Http\Response::HTTP_OK);
+        return response(ResponseAlias::HTTP_OK);
     }
 }

@@ -9,10 +9,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Profile extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
+    protected $casts = [
+      'date_of_but' => 'date'
+    ];
 
     protected $guarded = false;
 
@@ -31,13 +37,7 @@ class Profile extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return MorphTo
-     */
-    public function profileable(): MorphTo
-    {
-        return $this->morphTo();
-    }
+
 
 
 
