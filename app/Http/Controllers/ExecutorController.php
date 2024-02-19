@@ -6,6 +6,7 @@ use App\Http\Requests\StoreExecutorRequest;
 use App\Http\Requests\UpdateExecutorRequest;
 use App\Http\Resources\ExecutorResource;
 use App\Models\Executor;
+use App\Services\ExecutorService;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -16,7 +17,7 @@ class ExecutorController extends Controller
      */
     public function index(): array
     {
-        return ExecutorResource::collection(Executor::all())->resolve();
+        return ExecutorResource::collection(ExecutorService::index())->resolve();
 
     }
 
@@ -34,7 +35,7 @@ class ExecutorController extends Controller
     public function store(StoreExecutorRequest $request): ExecutorResource
     {
         $data = $request->validated();
-        $executor =  Executor::create($data);
+        $executor =  ExecutorService::create($data);
         return ExecutorResource::make($executor);
 
     }
@@ -61,8 +62,7 @@ class ExecutorController extends Controller
     public function update(UpdateExecutorRequest $request, Executor $executor): ExecutorResource
     {
         $data = $request->validated();
-        $executor->update($data);
-        $executor =  $executor->fresh();
+        $executor =  ExecutorService::update($executor,$data);
         return ExecutorResource::make($executor);
     }
 
@@ -71,7 +71,7 @@ class ExecutorController extends Controller
      */
     public function destroy(Executor $executor): ResponseAlias
     {
-        $executor->delete();
+        ExecutorService::destroy($executor);
         return response(ResponseAlias::HTTP_OK);
     }
 }

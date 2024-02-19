@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateOrderRequest;
 use App\Http\Resources\ExecutorResource;
 use App\Http\Resources\OrderResource;
 use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -17,7 +18,7 @@ class OrderController extends Controller
      */
     public function index(): array
     {
-        return OrderResource::collection(Order::all())->resolve();
+        return OrderResource::collection(OrderService::index())->resolve();
     }
 
     public function create()
@@ -31,7 +32,7 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request): OrderResource
     {
         $data = $request->validated();
-        $order =  Order::create($data);
+        $order =  OrderService::create($data);
         return OrderResource::make($order);
 
     }
@@ -58,8 +59,7 @@ class OrderController extends Controller
     public function update(UpdateOrderRequest $request, Order $order): OrderResource
     {
         $data = $request->validated();
-        $order ->update($data);
-        $order =  $order->fresh();
+        $order = OrderService::update($order,$data);
         return OrderResource::make($order);
     }
 
@@ -68,7 +68,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order): ResponseAlias
     {
-       $order->delete();
+       OrderService::destroy($order);
        return response(ResponseAlias::HTTP_OK);
     }
 }

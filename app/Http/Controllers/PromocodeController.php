@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePromocodeRequest;
 use App\Http\Requests\UpdatePromocodeRequest;
 use App\Http\Resources\PromocodeResource;
+use App\Http\Resources\TransactionResource;
 use App\Models\Promocode;
+use App\Services\PromocodeService;
+use App\Services\TransactionService;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -16,23 +19,23 @@ class PromocodeController extends Controller
      */
     public function index(): array
     {
-        return PromocodeResource::collection(Promocode::all())->resolve();
+        return PromocodeResource::collection(PromocodeService::index())->resolve();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePromocodeRequest $request)
+    public function store(StorePromocodeRequest $request): PromocodeResource
     {
         $data = $request->validated();
-        $promocode = Promocode::create($data);
+        $promocode = PromocodeService::create($data);
         return PromocodeResource::make($promocode);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Promocode $promocode)
+    public function show(Promocode $promocode): PromocodeResource
     {
         return PromocodeResource::make($promocode);
     }
@@ -43,8 +46,7 @@ class PromocodeController extends Controller
     public function update(UpdatePromocodeRequest $request, Promocode $promocode): PromocodeResource
     {
         $data = $request->validated();
-        $promocode->update($data);
-        $promocode = $promocode->fresh();
+        $promocode = PromocodeService::update($promocode,$data);
         return PromocodeResource::make($promocode);
     }
 
@@ -53,7 +55,7 @@ class PromocodeController extends Controller
      */
     public function destroy(Promocode $promocode): ResponseAlias
     {
-        $promocode->delete();
+        PromocodeService::destroy($promocode);
         return response(ResponseAlias::HTTP_OK);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
+use App\Services\ProfileService;
 use Illuminate\Http\Client\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -16,7 +17,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        return ProfileResource::collection(Profile::all())->resolve();
+        return ProfileResource::collection(ProfileService::index())->resolve();
 
     }
 
@@ -34,7 +35,7 @@ class ProfileController extends Controller
     public function store(StoreProfileRequest $request): ProfileResource
     {
         $data = $request->validated();
-        $profiles = Profile::create($data);
+        $profiles = ProfileService::create($data);
         return ProfileResource::make($profiles);
 
     }
@@ -61,9 +62,8 @@ class ProfileController extends Controller
     public function update(UpdateProfileRequest $request, Profile $profile): ProfileResource
     {
         $data = $request->validated();
-        $profile->update($data);
-        $profiles = $profile->fresh();
-        return ProfileResource::make($profiles);
+        $profile = ProfileService::update($profile,$data);
+        return ProfileResource::make($profile);
     }
 
     /**

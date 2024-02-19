@@ -19,7 +19,7 @@ class UpdateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user'=>'required|string',
+            'user_id'=>'required|integer',
             'value'=>'required|numeric',
             'status'=>'required|integer'
         ];

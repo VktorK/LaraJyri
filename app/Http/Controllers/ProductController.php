@@ -6,7 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Response;
+use App\Services\ProductService;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 
@@ -17,13 +17,13 @@ class ProductController extends Controller
      */
     public function index(): array
     {
-        return ProductResource::collection(Product::all())->resolve();
+        return ProductResource::collection(ProductService::index())->resolve();
     }
 
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-        $product = Product::create($data);
+        $product = ProductService::create($data);
         return ProductResource::make($product);
 
     }
@@ -47,8 +47,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product): ProductResource
     {
         $data = $request->validated();
-        $product->update($data);
-        $product = $product->fresh();
+       $product = ProductService::update($product,$data);
         return ProductResource::make($product);
     }
 
@@ -57,7 +56,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): ResponseAlias
     {
-        $product->delete();
+        ProductService::destroy($product);
         return response(ResponseAlias::HTTP_OK);
     }
 }

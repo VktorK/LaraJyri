@@ -6,6 +6,7 @@ use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use App\Services\TransactionService;
 use http\Client\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -16,7 +17,7 @@ class TransactionController extends Controller
      */
     public function index(): array
     {
-        return TransactionResource::collection(Transaction::all())->resolve();
+        return TransactionResource::collection(TransactionService::index())->resolve();
     }
 
     /**
@@ -33,7 +34,7 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request): TransactionResource
     {
         $data = $request->validationData();
-        $transactions = Transaction::create($data);
+        $transactions = TransactionService::create($data);
         return TransactionResource::make($transactions);
 
     }
@@ -50,9 +51,8 @@ class TransactionController extends Controller
     public function update(UpdateTransactionRequest $request, Transaction $transaction): TransactionResource
     {
         $data = $request->validationData();
-        $transaction->update($data);
-        $transactions = $transaction->fresh();
-        return TransactionResource::make($transactions);
+        $transaction = TransactionService::update($transaction,$data);
+        return TransactionResource::make($transaction);
     }
 
     /**
@@ -60,7 +60,7 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction): ResponseAlias
     {
-        $transaction->delete();
+        TransactionService::destroy($transaction);
         return response(ResponseAlias::HTTP_OK);
     }
 }

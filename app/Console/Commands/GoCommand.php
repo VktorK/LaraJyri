@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Executor;
-use App\Models\StatusOfTransaction;
 use App\Models\Transaction;
-use App\Models\User;
 use Illuminate\Console\Command;
 
 class GoCommand extends Command
@@ -24,12 +21,18 @@ class GoCommand extends Command
      */
     protected $description = 'Command description';
 
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $user = Executor::first();
-        dd($user->orders->toArray());
+
+        $valueOne = 10;
+        $valueTwo = 20;
+
+        $transactions = Transaction::sucTransactions($valueOne,$valueTwo)->get();
+        dd($transactions->toArray());
     }
 }
+

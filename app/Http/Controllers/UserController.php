@@ -7,7 +7,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 
-use Illuminate\Http\Response;
+use App\Services\UserService;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller
@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(): array
     {
-        return UserResource::collection(User::all())->resolve();
+        return UserResource::collection(UserService::index())->resolve();
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         $data = $request->validationData();
-        $user = User::create($data);
+        $user = UserService::create($data);
         return UserResource::make($user);
     }
 
@@ -44,8 +44,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): UserResource
     {
         $data = $request->validated();
-        $user->update($data);
-        $user = $user->fresh();
+        $user = UserService::update($user,$data);
         return UserResource::make($user);
     }
 
@@ -54,7 +53,7 @@ class UserController extends Controller
      */
     public function destroy(User $user): ResponseAlias
     {
-        $user->delete();
+        UserService::destroy($user);
         return response(ResponseAlias::HTTP_OK);
     }
 }
