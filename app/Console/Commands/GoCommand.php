@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class GoCommand extends Command
 {
@@ -28,11 +30,12 @@ class GoCommand extends Command
     public function handle()
     {
 
-        $valueOne = 10;
-        $valueTwo = 20;
+        User::first()->update(
+            [
+                'password'=> Hash::make('123123123')
+            ]
+        );
 
-        $transactions = Transaction::sucTransactions($valueOne,$valueTwo)->get();
-        dd($transactions->toArray());
     }
 }
 

@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StorePromocodeRequest;
-use App\Http\Requests\UpdatePromocodeRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Promocode\StorePromocodeRequest;
+use App\Http\Requests\Promocode\UpdatePromocodeRequest;
 use App\Http\Resources\PromocodeResource;
-use App\Http\Resources\TransactionResource;
 use App\Models\Promocode;
 use App\Services\PromocodeService;
-use App\Services\TransactionService;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class PromocodeController extends Controller

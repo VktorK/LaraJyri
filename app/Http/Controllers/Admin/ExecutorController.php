@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreExecutorRequest;
-use App\Http\Requests\UpdateExecutorRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Executor\StoreExecutorRequest;
+use App\Http\Requests\Executor\UpdateExecutorRequest;
 use App\Http\Resources\ExecutorResource;
 use App\Models\Executor;
 use App\Services\ExecutorService;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ExecutorController extends Controller

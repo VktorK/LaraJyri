@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Order;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOrderRequest extends FormRequest
+class StoreOrderRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -26,4 +22,3 @@ class UpdateOrderRequest extends FormRequest
         ];
     }
 }
-

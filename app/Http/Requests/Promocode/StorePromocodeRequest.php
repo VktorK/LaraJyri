@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Promocode;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateProductRequest extends FormRequest
+class StorePromocodeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,14 +19,13 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title"=>"required|string",
-            "content"=>"required|string",
-            "category"=>"required|string",
-            "executor"=>"required|string",
-            "price"=>"required|numeric",
+            "value" => 'required|string',
+            "date_of_end" => 'required|date',
+            "summ" => 'required|numeric',
+            "summ_from" => 'required|numeric',
+            "user" => 'required|string',
         ];
     }
 }
-
 
 

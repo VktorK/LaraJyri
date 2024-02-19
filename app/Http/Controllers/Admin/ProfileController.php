@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreProfileRequest;
-use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Profile\StoreProfileRequest;
+use App\Http\Requests\Profile\UpdateProfileRequest;
 use App\Http\Resources\ProfileResource;
 use App\Models\Profile;
 use App\Services\ProfileService;
-use Illuminate\Http\Client\Response;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProfileController extends Controller
