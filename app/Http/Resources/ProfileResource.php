@@ -19,12 +19,11 @@ class ProfileResource extends JsonResource
             "Last_name" => $this->Last_name,
             "First_name" => $this->First_name,
             "Middle_name" => $this->Middle_name,
-            "gender" => $this->gender,
             "date_of_but" => $this->date_of_but,
-            "address_of_" => $this->address_of_,
             "residential_address" => $this->residential_address,
             "login" => $this->login,
             "balance" => $this->balance,
+            "user_id"=> $this->user_id
         ];
     }
 }

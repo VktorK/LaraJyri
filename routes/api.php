@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 //Route::patch('/products/{product}',[ProductController::class, 'update']);
 //Route::delete('/products/{product}',[ProductController::class, 'destroy']);
 
-Route::group(['middleware' =>['jwt.auth','auth.admin']], function (){
+Route::group(['middleware' =>['jwt.auth','auth.admin'], 'prefix'=>'admin'], function (){
     Route::apiResource('users',UserController::class);
     Route::apiResource('executors',ExecutorController::class);
     Route::apiResource('orders',OrderController::class);
@@ -56,4 +56,12 @@ Route::group(['middleware' =>'jwt.auth'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+    Route::patch('/users',[\App\Http\Controllers\UserController::class, 'update']);
+    Route::delete('/users',[\App\Http\Controllers\UserController::class, 'destroy']);
+
+    Route::patch('/promocodes/update_user', [\App\Http\Controllers\PromocodeController::class, 'updateUser']);
 });
+Route::post('/users',[\App\Http\Controllers\UserController::class, 'store']);
+
+
+

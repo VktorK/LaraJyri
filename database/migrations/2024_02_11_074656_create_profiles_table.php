@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('Last_name')->nullable();
             $table->string('First_name')->nullable();
             $table->string('Middle_name')->nullable();
-            $table->date('date_of_but');
+            $table->date('date_of_but')->nullable();
             $table->string('residential_address')->nullable();
-            $table->string('login');
+            $table->string('login')->nullable();
             $table->decimal('balance')->nullable();
             $table->timestamps();
             $table->softDeletes();

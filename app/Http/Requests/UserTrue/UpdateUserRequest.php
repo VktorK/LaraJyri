@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\UserTrue;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -20,7 +20,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             "name" => 'required|string',
-            "email" => 'required|string|unique:users,email,' . auth()->id,
+            "email" => 'required|string|unique:users,email,' . auth()->id(),
         ];
     }
 }
