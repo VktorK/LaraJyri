@@ -19,14 +19,18 @@ class PromocodeObserver
      */
     public function updated(Promocode $promocode): void
     {
-        Promocode::where('user_id', auth()->id())->update([
-            'user_id'=>null
-            ]);
     }
 
-    /**
-     * Handle the Promocode "deleted" event.
-     */
+    public function updating(Promocode $promocode)
+    {
+        if (isset($promocode->getDirty()['user_id'])) {
+            Promocode::where('user_id', auth()->id())->update([
+                'user_id' => null
+            ]);
+        }
+    }
+
+
     public function deleted(Promocode $promocode): void
     {
         //

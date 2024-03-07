@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_users', function (Blueprint $table) {
+        Schema::create('product_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->index()->constrained('users');
             $table->foreignId('product_id')->index()->constrained('products');
+            $table->unsignedBigInteger('qty')->default(1);
+            $table->foreignId('order_id')->nullable()->index()->constrained('orders');
             $table->timestamps();
+
         });
     }
 

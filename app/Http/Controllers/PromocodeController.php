@@ -55,9 +55,11 @@ class PromocodeController extends Controller
     public function updateUser(UpdateUserRequest $request)
     {
         $data = $request->validationData();
-        $data['promocode']->update(['user_id'=>null]);
+        $data['promocode']->update(['user_id'=>auth()->id()]);
         return PromocodeResource::make($data['promocode']);
     }
+
+
 
     /**
      * Remove the specified resource from storage.

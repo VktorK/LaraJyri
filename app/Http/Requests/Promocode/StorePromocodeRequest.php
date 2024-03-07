@@ -19,11 +19,10 @@ class StorePromocodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "value" => 'required|string',
+            "code" => 'required|string',
+            "value" => 'required|integer',
             "date_of_end" => 'required|date',
-            "summ" => 'required|numeric',
-            "summ_from" => 'required|numeric',
-            "user" => 'required|string',
+            "limit_from" => 'required|integer',
         ];
     }
 }

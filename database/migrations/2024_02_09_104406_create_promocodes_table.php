@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('promocodes', function (Blueprint $table) {
             $table->id();
-            $table->string('value');
+
+            $table->string('code');
+            $table->integer('value');
             $table->date('date_of_end');
-            $table->decimal('summ');
-            $table->decimal('summ_from');
-            $table->foreignId('user_id')->index()->constrained('users');
+            $table->integer('limit_from');
+            $table->foreignId('user_id')->index()->nullable()->constrained('users');
             $table->timestamps();
             $table->softDeletes();
 

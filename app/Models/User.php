@@ -47,10 +47,11 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    public function promocodes() : hasMany
+    public function promocode()
     {
-        return $this->hasMany(Promocode::class);
+        return $this->hasOne(Promocode::class);
     }
+
 
     public function transactions() : hasMany
     {
@@ -66,6 +67,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function productsInCart(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->wherePivot('order_id',null);
+    }
+
+
 
     public function profile(): hasOne
     {
