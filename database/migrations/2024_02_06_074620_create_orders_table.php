@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->date('date_of_order');
-            $table->decimal('total_sum');
-            $table->string('service_name');
+            $table->decimal('total_sum')->nullable();
+            $table->unsignedSmallInteger('status_idx')->default(1);
             $table->timestamps();
             $table->softDeletes();
 

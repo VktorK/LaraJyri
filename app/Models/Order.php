@@ -15,6 +15,16 @@ class Order extends Model
 
     use SoftDeletes;
 
+
+    const STATUS_SUCCSSES = 1;
+    const STATUS_PAYD = 2;
+    const STATUS_FAILED = 3;
+    const STATUSES = [
+        self::STATUS_SUCCSSES => 'Создан',
+        self::STATUS_PAYD => 'Оплачен',
+        self::STATUS_FAILED=> 'Отменен'
+    ];
+
     protected $casts = [
       'date_of_order'=>'date'
     ];

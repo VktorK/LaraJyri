@@ -63,6 +63,9 @@ Route::group(['middleware' =>'jwt.auth'], function () {
     Route::patch('/users/product-in-cart', [\App\Http\Controllers\UserController::class, 'updateProductInCart']);
     Route::delete('/users/product-in-cart', [\App\Http\Controllers\UserController::class, 'destroyProductInCart']);
 
+    Route::post('/orders',[\App\Http\Controllers\OrderController::class, 'store']);
+    Route::patch('/orders/{order}/update-status',[\App\Http\Controllers\OrderController::class, 'updateStatus']);
+
     Route::patch('/promocodes/update-user', [\App\Http\Controllers\PromocodeController::class, 'updateUser']);
 });
 Route::post('/users',[\App\Http\Controllers\UserController::class, 'store']);
