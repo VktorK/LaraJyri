@@ -47,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    public function promocode()
+    public function promocode(): HasOne
     {
         return $this->hasOne(Promocode::class);
     }
@@ -98,6 +98,21 @@ class User extends Authenticatable implements JWTSubject
     protected function getIsAdminAttribute()
     {
         return $this->roles->pluck('title')->contains('admin');
+    }
+
+    public function updateProductQty(Order $order): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->withPivot('qty')->wherePivot('order_id',$order->id);
+    }
+
+    public function destroyOrder(Order $order): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->withPivot('qty')->wherePivot('order_id',$order->id);
+    }
+
+    public function destroyProduct(Order $order): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)->withPivot('qty')->wherePivot('order_id',$order->id);
     }
 }
 

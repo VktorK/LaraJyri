@@ -18,16 +18,23 @@ class Transaction extends Model
     protected $guarded = false;
 
 
-
     const STATUS_SUCCSSES = 1;
     const STATUS_PAYD = 2;
     const STATUS_FAILED = 3;
+    const STATUS_EXTERNAL_FAILED = 4;
     const STATUSES = [
         self::STATUS_SUCCSSES => 'Создан',
-        self::STATUS_PAYD => 'Оплачен',
-        self::STATUS_FAILED=> 'Отменен'
+        self::STATUS_PAYD => 'Успешно',
+        self::STATUS_FAILED => 'Ошибка',
+        self::STATUS_EXTERNAL_FAILED => 'Ошибка платежки',
     ];
 
+    const TYPE_DEBET = 1;
+    const TYPE_CREDIT = 2;
+    const TYPES = [
+        self::TYPE_DEBET => 'Пополнение',
+        self::TYPE_CREDIT => 'Оплата товара',
+    ];
 
 
     public function user(): belongsTo
@@ -43,6 +50,10 @@ class Transaction extends Model
             ->oldest();
     }
 
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
 
 
 

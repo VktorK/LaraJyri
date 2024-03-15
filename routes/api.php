@@ -65,6 +65,17 @@ Route::group(['middleware' =>'jwt.auth'], function () {
 
     Route::post('/orders',[\App\Http\Controllers\OrderController::class, 'store']);
     Route::patch('/orders/{order}/update-status',[\App\Http\Controllers\OrderController::class, 'updateStatus']);
+    Route::patch('/orders/{order}/products',[\App\Http\Controllers\OrderController::class, 'updateProducts']);
+    Route::delete('/orders/{order}/products',[\App\Http\Controllers\OrderController::class, 'destroyProduct']);
+    Route::delete('/orders/{order}',[\App\Http\Controllers\OrderController::class, 'destroyOrder']);
+
+
+    Route::post('/orders/{order}/transactions',[\App\Http\Controllers\OrderController::class, 'storeTransactionsDebet']);
+
+
+    Route::post('/transactions/type-debet',[\App\Http\Controllers\TransactionController::class, 'storeTypeDebet']);
+    Route::patch('/transactions/{transaction}/status-success',[\App\Http\Controllers\TransactionController::class, 'updateStatusSuccess']);
+    Route::patch('/transactions/{transaction}/status-external-failed',[\App\Http\Controllers\TransactionController::class, 'updateStatusExternalFailed']);
 
     Route::patch('/promocodes/update-user', [\App\Http\Controllers\PromocodeController::class, 'updateUser']);
 });

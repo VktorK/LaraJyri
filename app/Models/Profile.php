@@ -22,10 +22,6 @@ class Profile extends Model
 
     protected $guarded = false;
 
-    public function gender(): belongsTo
-    {
-        return $this->belongsTo(Gender::class);
-    }
 
     public function transactions(): hasMany
     {

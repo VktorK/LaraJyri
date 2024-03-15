@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Order;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -29,13 +30,8 @@ class GoCommand extends Command
      */
     public function handle()
     {
-
-        User::first()->update(
-            [
-                'password'=> Hash::make('123123123')
-            ]
-        );
-
+        $order = Order::first();
+        dd($order->total_price);
     }
 }
 
