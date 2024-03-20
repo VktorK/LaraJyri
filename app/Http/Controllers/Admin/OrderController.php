@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\IndexRequest;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Http\Requests\Order\UpdateOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Order;
+use App\Models\Product;
 use App\Services\OrderService;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -15,9 +18,11 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): array
+    public function index(IndexRequest $request): array
     {
-        return OrderResource::collection(OrderService::index())->resolve();
+        $data = $request->validated();
+        $orders = Order::filter($data)->get();
+        return OrderResource::collection($orders)->resolve();
     }
 
     public function create()

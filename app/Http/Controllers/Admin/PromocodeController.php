@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Promocode\IndexRequest;
 use App\Http\Requests\Promocode\StorePromocodeRequest;
 use App\Http\Requests\Promocode\UpdatePromocodeRequest;
 use App\Http\Resources\PromocodeResource;
@@ -15,9 +16,11 @@ class PromocodeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): array
+    public function index(IndexRequest $request): array
     {
-        return PromocodeResource::collection(PromocodeService::index())->resolve();
+        $data = $request->validated();
+        $promocodes = Promocode::filter($data)->get();
+        return PromocodeResource::collection($promocodes)->resolve();
     }
 
     /**

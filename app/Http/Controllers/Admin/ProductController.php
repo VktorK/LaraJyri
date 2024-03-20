@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\IndexRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
@@ -16,9 +17,11 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): array
+    public function index(IndexRequest $request): array
     {
-        return ProductResource::collection(ProductService::index())->resolve();
+        $data = $request->validated();
+        $products = Product::filter($data)->get();
+        return ProductResource::collection($products)->resolve();
     }
 
     public function store(StoreProductRequest $request)

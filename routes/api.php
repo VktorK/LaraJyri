@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 //Route::patch('/products/{product}',[ProductController::class, 'update']);
 //Route::delete('/products/{product}',[ProductController::class, 'destroy']);
 
-Route::group(['middleware' =>['jwt.auth','auth.admin'], 'prefix'=>'admin'], function (){
+Route::group(['prefix'=>'admin'], function (){
     Route::apiResource('users',UserController::class);
     Route::apiResource('executors',ExecutorController::class);
     Route::apiResource('orders',OrderController::class);
@@ -72,14 +72,14 @@ Route::group(['middleware' =>'jwt.auth'], function () {
 
     Route::post('/orders/{order}/transactions',[\App\Http\Controllers\OrderController::class, 'storeTransactionsDebet']);
 
-
+    Route::get('/transactions', [\App\Http\Controllers\TransactionController::class, 'index']);
     Route::post('/transactions/type-debet',[\App\Http\Controllers\TransactionController::class, 'storeTypeDebet']);
-    Route::patch('/transactions/{transaction}/status-success',[\App\Http\Controllers\TransactionController::class, 'updateStatusSuccess']);
-    Route::patch('/transactions/{transaction}/status-external-failed',[\App\Http\Controllers\TransactionController::class, 'updateStatusExternalFailed']);
 
     Route::patch('/promocodes/update-user', [\App\Http\Controllers\PromocodeController::class, 'updateUser']);
 });
 Route::post('/users',[\App\Http\Controllers\UserController::class, 'store']);
+Route::patch('/transactions/{transaction}/status-success',[\App\Http\Controllers\TransactionController::class, 'updateStatusSuccess']);
+Route::patch('/transactions/{transaction}/status-external-failed',[\App\Http\Controllers\TransactionController::class, 'updateStatusExternalFailed']);
 
 
 

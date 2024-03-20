@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Http\Filters\ProductFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,8 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use HasFactory;
-
     use SoftDeletes;
+    use HasFilter;
 
     protected $guarded = false;
 
@@ -30,4 +32,6 @@ class Product extends Model
     {
         return $this->belongsToMany(Executor::class);
     }
+
+
 }

@@ -15,16 +15,15 @@ class ExecutorResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-           "id"=>$this->id,
-           "Last_name"=>$this->Last_name,
-           "First_name"=>$this->First_name,
-           "Middle_name"=>$this->Middle_name,
-           "Phone"=>$this->Phone,
-           "Specialization"=>$this->Specialization,
-           "experience"=>$this->experience,
-           "address"=>$this->address
-
-
+            "id" => $this->id,
+            "Last_name" => $this->Last_name,
+            "First_name" => $this->First_name,
+            "Middle_name" => $this->Middle_name,
+            "Phone" => $this->Phone,
+            "Specialization" => $this->Specialization,
+            "experience" => $this->experience,
+            "address" => $this->address,
+            "created_at" => $this->created_at
         ];
 
     }

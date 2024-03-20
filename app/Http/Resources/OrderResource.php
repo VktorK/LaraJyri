@@ -18,7 +18,9 @@ class OrderResource extends JsonResource
             "id" => $this->id,
             "status_idx" => $this -> status_idx,
             "total_sum" => $this->total_sum,
-            "user" => $this->user,
+            "created_at"=>$this->created_at,
+            "user" => $this->user
+
         ];
     }
 }

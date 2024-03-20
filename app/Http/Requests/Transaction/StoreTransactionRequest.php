@@ -20,7 +20,6 @@ class StoreTransactionRequest extends FormRequest
         return [
          'user_id'=>'required|integer',
          'value'=>'required|numeric',
-         'status'=>'required|integer'
         ];
     }
 }

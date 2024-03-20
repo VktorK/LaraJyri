@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\StoreTypeDebetRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
+use App\Services\TransactionService;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -13,6 +15,13 @@ use Mockery\Exception;
 
 class TransactionController extends Controller
 {
+
+    public function index()
+    {
+
+        return TransactionResource::collection(\App\Services\User\TransactionService::index())->resolve();
+    }
+
     public function storeTypeDebet(StoreTypeDebetRequest $request)
     {
         $data = $request->validated();
@@ -22,14 +31,15 @@ class TransactionController extends Controller
 
     public function updateStatusSuccess(Transaction $transaction)
     {
+
         try {
             DB::beginTransaction();
             $transaction->update([
-                'status' => Transaction::STATUS_SUCCSSES
+                'status' => Transaction::STATUS_SUCCSESS
             ]);
 
-            $transaction->user()->profile()->update([
-                'balance' => $transaction->user()->profile->balance + $transaction->value,
+            $transaction->user->profile()->update([
+                'balance' => $transaction->user->profile->balance + $transaction->value,
             ]);
 
             DB::commit();

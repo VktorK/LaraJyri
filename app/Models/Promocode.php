@@ -11,6 +11,7 @@ class Promocode extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasFilter;
 
     protected $casts = [
         'date_of_end' => 'date'

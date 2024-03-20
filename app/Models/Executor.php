@@ -13,12 +13,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Executor extends Model
 {
     use HasFactory;
-
+    use HasFilter;
     use SoftDeletes;
 
     protected $guarded = false;
 
-    public function order() : belongsTo
+    public function order(): belongsTo
     {
         return $this->belongsTo(Order::class);
     }

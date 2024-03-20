@@ -29,7 +29,7 @@ class StoreTransactionDebetRequest extends FormRequest
 
     protected function passedValidation()
     {
-        if(auth()->user()->profile()->balance < $this->order->total_price){
+        if(auth()->user()->profile->balance < $this->order->total_price){
             throw ValidationException::withMessages([
                 'message'=>'Недостаточно средств для покупки'
             ]);

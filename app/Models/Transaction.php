@@ -18,13 +18,13 @@ class Transaction extends Model
     protected $guarded = false;
 
 
-    const STATUS_SUCCSSES = 1;
-    const STATUS_PAYD = 2;
+    const STATUS_CREATED = 1;
+    const STATUS_SUCCSESS = 2;
     const STATUS_FAILED = 3;
     const STATUS_EXTERNAL_FAILED = 4;
     const STATUSES = [
-        self::STATUS_SUCCSSES => 'Создан',
-        self::STATUS_PAYD => 'Успешно',
+        self::STATUS_CREATED => 'Создан',
+        self::STATUS_SUCCSESS => 'Успешно',
         self::STATUS_FAILED => 'Ошибка',
         self::STATUS_EXTERNAL_FAILED => 'Ошибка платежки',
     ];
@@ -50,7 +50,7 @@ class Transaction extends Model
             ->oldest();
     }
 
-    public function order(): BelongsTo
+    public function order()
     {
         return $this->belongsTo(Order::class);
     }

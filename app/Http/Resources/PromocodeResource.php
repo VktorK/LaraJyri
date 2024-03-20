@@ -14,14 +14,14 @@ class PromocodeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-//        return [
-//           "id"=>$this->id,
-//            "code"=> $this->code,
-//           "value"=>$this->value,
-//           "date_of_end"=>$this->date_of_end,
-//           "limit_from"=>$this->limit_from,
-//           "user_id"=>$this->user()->id
-//        ];
-        return parent::toArray($request);
+        return [
+            "id" => $this->id,
+            "code" => $this->code,
+            "value" => $this->value,
+            "date_of_end" => $this->date_of_end,
+            "limit_from" => $this->limit_from,
+            "created_at" => $this->created_at,
+
+        ];
     }
 }

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory;
-
+    use HasFilter;
     use SoftDeletes;
 
 
@@ -23,44 +23,62 @@ class Order extends Model
     const STATUSES = [
         self::STATUS_SUCCSSES => 'Создан',
         self::STATUS_PAYD => 'Оплачен',
-        self::STATUS_FAILED=> 'Отменен'
+        self::STATUS_FAILED => 'Отменен'
     ];
 
     protected $casts = [
-      'date_of_order'=>'date'
+        'date_of_order' => 'date'
     ];
 
     protected $guarded = false;
 
-    public function user() : belongsTo
+//    protected static function booted()
+//    {
+//        static::created(callback: function (Order $order) {
+//            $transaction = $order->transactions()->create([
+//                "value" => $order->total_price
+//            ]);
+//        });
+//    }
+
+
+    public
+    function user(): belongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function executors() : hasMany
+    public
+    function executors(): hasMany
     {
         return $this->hasMany(Executor::class);
     }
 
-    public function products(): BelongsToMany
+    public
+    function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'product_user', 'order_id', 'product_id')
             ->withPivot('qty');
     }
 
-    public function transactions(): HasMany
+    public
+    function transactions()
     {
         return $this->hasMany(Transaction::class);
     }
 
-    public function getTotalPriceAttribute(): int
+    public
+    function getTotalPriceAttribute(): int
     {
         $total = 0;
         foreach ($this->products as $product) {
-            $total += (int) $product->price * $product->pivot->qty;
+            $total += (int)$product->price * $product->pivot->qty;
         }
         return $total;
     }
 
-
 }
+
+
+
+

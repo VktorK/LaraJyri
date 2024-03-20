@@ -77,22 +77,25 @@ class OrderController extends Controller
 
     public function storeTransactionsDebet(Order $order,StoreTransactionDebetRequest $request)
     {
+
         $transaction = $order->transactions()->create([
-            "value"=> $order->total_price
+            "value" => $order->total_price,
+            "user_id"=> auth()->id()
         ]);
         try
         {
             Db::beginTransaction();
             $transaction->update([
+                'user_id'=>auth()->id(),
                 'status'=> Transaction::STATUS_SUCCSSES
             ]);
 
             $order->update([
-                'status'=> Order::STATUS_SUCCSSES
+                'status_idx'=> Order::STATUS_SUCCSSES
             ]);
 
             $order->user()->profile()->update([
-               'balance'=>$order->user()->profile->balance - $order->total_price,
+               'balance'=> $order->user()->profile->balance - $order->total_price,
             ]);
 
             Db::commit();
@@ -106,5 +109,6 @@ class OrderController extends Controller
         return OrderResource::make($order)->resolve();
 
     }
+
 
 }

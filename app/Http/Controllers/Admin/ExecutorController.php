@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Executor\IndexRequest;
 use App\Http\Requests\Executor\StoreExecutorRequest;
 use App\Http\Requests\Executor\UpdateExecutorRequest;
 use App\Http\Resources\ExecutorResource;
@@ -15,9 +16,11 @@ class ExecutorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): array
+    public function index(IndexRequest $request): array
     {
-        return ExecutorResource::collection(ExecutorService::index())->resolve();
+        $data = $request->validated();
+        $executors = Executor::filter($data)->get();
+        return ExecutorResource::collection($executors)->resolve();
 
     }
 
